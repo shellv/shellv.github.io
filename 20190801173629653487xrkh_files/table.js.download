@@ -1,0 +1,492 @@
+function setBG(id) {
+	var trObj = document.getElementById(id);
+	trObj.style.background = "#D3EAEF";
+}
+function clrBG(id) {
+	var trObj = document.getElementById(id);
+	trObj.style.background = "#FFFFFF";
+}
+
+function clrBGC(id,color) {
+	var trObj = document.getElementById(id);
+	trObj.style.background = color;
+}
+
+
+function setColor(id){
+	var trObj = document.getElementById(id);
+	trObj.style.color = "#AB2121";
+}
+
+function clrColor(id){
+	var trObj = document.getElementById(id);
+	trObj.style.color = "black";
+}
+function redColor(id){
+	var trObj = document.getElementById(id);
+	trObj.style.color = "red";
+}
+function blueColor(id){
+	var trObj = document.getElementById(id);
+	trObj.style.color = "#113399";
+}
+function whiteColor(id){
+	var trObj = document.getElementById(id);
+	trObj.style.color = "white";
+}
+
+function overStyle(obj){
+	$(obj).removeClass("query1");
+	$(obj).addClass("query2");
+}
+
+function outStyle(obj){
+	$(obj).removeClass("query2");
+	$(obj).addClass("query1");
+}
+
+//跳转分页
+function topage(page) {
+	try{
+	var form = document.getElementById("pageList");
+	form.page.value = page;
+	
+	form.submit();
+	}catch(e){
+		alert(e);
+	}
+}
+
+//跳转到指定页面
+function go(totalPage) {
+	
+	var inputPageValue = document.getElementById("inputPage").value;	
+	var form = document.getElementById("pageList");
+
+	if(isNaN(inputPageValue)){
+		alert("输入页数必须为整数");
+		return;
+	}else if(inputPageValue<=0){
+		alert("输入页数不能为0");
+		return;
+	}
+	form.page.value =inputPageValue;
+	form.submit();
+}
+
+
+
+
+
+function correctWords(){
+	$("select").each(function(){
+		if($(this).children("option").length>0){
+			($(this).children("option")).each(function(i,element){
+				if(element.text=="浦江县"||element.label=="浦江县"||element.innerText=="浦江县"){
+					$(element).text("蒲江县");
+				}
+			})
+		}
+	});
+}
+//
+function confirmQuery(inputPage,currentPage){
+	if(currentPage != inputPage)
+		return;
+	var form = document.getElementById("pageList");
+	form.page.value = 1;
+	
+	//去空格
+	var input=$("input[type='text']");
+	for (var i = 0; i < input.length; i++) {
+		var value=input[i].value;
+		
+		var info= $.trim(value);
+		//转义
+		var bfh=info.indexOf("\\%");
+		if(bfh<0)
+		{
+			var reg=new RegExp("%","g");
+			info=info.replace(reg,"\\%");
+			input[i].value=info;
+			
+		}
+		var xhx=info.indexOf("\\_");
+		if(xhx<0)
+		{
+			var reg2=new RegExp("_","g");
+			info=info.replace(reg2,"\\_");
+			input[i].value=info;
+			
+		}
+		
+		
+		
+	}
+	
+	
+	form.submit();
+}
+
+// 原因
+function showReason(reasonTitle,reasonCont){
+//	alert("字符数："+reasonCont.length);
+	if(reasonCont.length>=50&&reasonCont.length<200){
+		reasonCont=reasonCont.substring(0,50)+"<br/>"+reasonCont.substring(50,100)+"<br/>"+reasonCont.substring(100,150)+"<br/>"+reasonCont.substring(150,reasonCont.length)
+	}
+	if(reasonCont.length>=200){
+		reasonCont=reasonCont.substring(0,50)+"<br/>"+reasonCont.substring(50,100)+"<br/>"+reasonCont.substring(100,150)+"<br/>"+reasonCont.substring(150,200)+"<br/>"+reasonCont.substring(200,reasonCont.length)
+	}
+	art.dialog({title:reasonTitle,content:reasonCont,drag:false,icon:'face-sad',id:'id'});
+}
+
+// 提示用户查看退件原因
+function remindUser(cont){
+	if(cont != ''){
+		art.dialog({title:'退件原因',content:cont,lock:true,drag:false});
+	}		
+}
+
+
+
+
+function show(obj)
+{
+
+	var list=obj.getElementsByTagName("div");
+	var ele=list[0];
+	var width=obj.clientWidth;
+	ele.style.marginLeft=width+"px";
+	ele.style.visibility="visible";	
+	
+
+}
+
+function out(obj)
+{
+	var eles=obj.getElementsByTagName("div");
+	var ele=eles[0];
+	ele.style.visibility="hidden";
+}
+
+
+
+// 页面浮动
+$(function (){
+	/*$(".titleStyle").poshytip({
+		className: 'tip-skyblue',
+  	 	alignTo: 'target',
+  	 	alignX:'right',
+		offsetX:5,
+		offsetY:5,
+		showTimeout:5
+	 });*/
+	 try{
+	$(".titleStyle").poshytip({
+		className: 'tip-skyblue',
+  	 	alignTo: 'target',
+  	 	alignX:'right',
+		offsetX:5,
+		offsetY:5,
+		showTimeout:5
+	 });
+	}catch(e){}
+	correctWords();
+	handleRPN();
+	try{
+		
+		areaControl();
+	}catch(e){}
+	try{
+		handleSecondSurOrg();
+	}catch(e){
+	}
+	try{
+		SupervisoryOrgAreasControl("choiceArea","supervisoryOrg");
+		}catch(e){}
+	try{
+		
+		refreshSelect("1");
+	}catch(e){}
+	SupervisoryOrgAreasControl();
+});
+
+
+// 光标定位到输入框的最左边
+function focusLeft(id){
+	var input = $("#" + id);
+	input.focus();
+}
+function keyup(obj,totalPage,o){
+	var value=o.value;
+	var strP=/^\d+$/; 
+	if(!strP.exec(value))
+	{
+		
+		o.value=value.substring(0,value.length-1);
+		o.focus();
+	}
+	else{
+		if(value!=0 && value>totalPage)
+		{
+			alert("所输页数大于总页数");
+			o.value="";
+			o.focus();
+		}
+		else if(value == 0)
+		{
+			alert("所输页数不能为0");
+			o.value="";
+			o.focus();
+		}
+		
+		
+	}
+	
+	
+	if(obj.which == '13'){
+		this.go(totalPage);
+	}
+	
+	if(obj.keyCode == 13){
+		go(totalPage); 
+	}
+	
+	
+		
+	
+}
+
+function SupervisoryOrgAreasControl(tagId,selectId){
+	var role =$("#acctionRoleOrg").val()||$("#accountRole").val();
+	var areaId = $("#acctionAreaidOrg").val()||$("#accountArea").val();
+	var judgeChoiceArea = $("#judgeChoiceArea").val()||$("#accountAreaName").val();
+	//typeof(role)!= "undefined"&&typeof(areaId)!= "undefined"&&
+	//if( areaId!="20130809090659223kpu161g"&&role=="1"){
+	
+	if( role=="1"|| role=="0"){
+		var _default="";
+		var _tagdef="";
+		if(!selectId){
+			_default =$("#supervisoryOrg");
+		}else{
+			_default=$("#"+selectId);
+		}
+		if(!tagId){
+			_tagdef=$(".SupervisoryChoiceArea");
+		}else{
+			_tagdef=$("#"+tagId);
+			if(_tagdef.length<=0){
+				_tagdef = $("."+tagId);
+			}
+		}
+		if(_default!=""&&_tagdef!=""&&_default.length>0&&_tagdef.length>0){
+			var _tagdefOptions = _tagdef.children("option");
+			var _defaultOptions = _default.children("option");
+			
+			if(areaId=="201402241454ditieban"&&_tagdefOptions.length==0){
+			//if(_tagdefOptions.length==0){
+				$("<option value=''>全部</option>").appendTo(_tagdef);
+			}
+			if(_defaultOptions.length==1&& $(_defaultOptions[0]).text()=="全部"){
+				$(_tagdefOptions[0]).remove();
+				$("<option value=''>全部</option>").appendTo(_tagdef);
+			}
+			if(_default.length==1&&_tagdefOptions.length>1){
+				_tagdefOptions.each(function(i){
+					if(i>0){						
+						$(this).remove();
+					}
+				});
+				
+			}
+			if(_defaultOptions.length>1){
+				_tagdefOptions.each(function(){
+					$(this).remove();
+				});
+				var curObj="";
+				var _defLength = _defaultOptions.length;
+				_defaultOptions.each(function(i){
+				if(_defLength>2){
+					curObj="";
+					curObj=$("<option value='"+$(this).val() +"'>"+($(this)[0].text||$(this)[0].label||$(this)[0].innerText) +"</option>").appendTo(_tagdef);
+					if($(this).attr("selected")){
+						$(curObj).attr("selected",true);
+					}
+					if(judgeChoiceArea==$(this).val()){
+						$(curObj).attr("selected",true);
+					}else if(i==0&&(judgeChoiceArea==""||null==judgeChoiceArea||typeof(judgeChoiceArea)=="undefined")){
+						$(curObj).attr("selected",true);
+					}
+				}else{
+					if(i==1){
+						curObj="";
+						curObj=$("<option value='"+$(this).val() +"'>"+($(this)[0].text||$(this)[0].label||$(this)[0].innerText) +"</option>").appendTo(_tagdef);
+						if($(this).attr("selected")){
+							$(curObj).attr("selected",true);
+						}
+						if(judgeChoiceArea==$(this).val()){
+							$(curObj).attr("selected",true);
+						}else if(i==0&&(judgeChoiceArea==""||null==judgeChoiceArea||typeof(judgeChoiceArea)=="undefined")){
+							$(curObj).attr("selected",true);
+						}
+					}
+				}
+				});
+			}
+		}
+	}
+}
+
+function handleSecondSurOrg(){
+	
+	var role=$("#accountRole").val();
+	var areaId =$("#accountArea").val();
+	var accountAreaName = $("#accountAreaName").val();
+	
+	if(role != "" && areaId != "" && accountAreaName != "" && role==1){//areaId!="20130809090659223kpu161g"
+		if($("#secondSupOrg").length>0&&areaId!="20130809090659223kpu161g"&&$("#secondSupOrg").children().length==0){
+			$("<option value='"+areaId+"'>"+accountAreaName+" </option>").appendTo($("#secondSupOrg"));
+		}
+	}
+}
+
+function handleRPN(){
+	var timeValue=$("#redYearLength").val();
+	
+	if(timeValue&&timeValue!=""&&timeValue>7){
+		$("#propertyNumbers").css("color","red");
+	}
+}
+
+function handelAreaForSp(selecteClass,statue,url,clickReset){
+	
+	if($("."+selecteClass).children("option").length>=1){
+		var _checkRegionalID = $("."+selecteClass+" option:selected").val();
+		
+		if(_checkRegionalID =="all"){
+			_checkRegionalID = statue;
+		}
+		if((statue=="fault_1"||statue=="working_1"||statue=="lifting_1"||statue=="maintain_1"||statue=="monitor_1"||statue=="runList_1")&&_checkRegionalID==""){
+			_checkRegionalID = statue;
+		}
+		if(_checkRegionalID==""||!_checkRegionalID){
+			return false;
+		}
+		 $.post(url,{ 
+			 businessStatue:statue,
+			 _checkRegionalID:_checkRegionalID
+			  },function(data) {
+				  
+				  try{
+					  var datas =  eval("("+data+")"); 
+					  //var datas = $.parseJSON(data);
+					  var def_op = $(".choiceArea");
+					  if(def_op.length<1){
+						  def_op = $(".SupervisoryChoiceArea");
+					  }
+					  
+					  if( datas.length > 0){
+						  def_op.children("option").each(function(){
+							  $(this).remove();
+						  });
+						  if(datas.length > 1){
+							  $("<option value=''>全部</option>").appendTo(def_op);
+						  }
+						  
+					  }else{
+						  if($(def_op.children("option")[0]).text()=="全部"){
+							  def_op.children("option").each(function(i){
+								  if(i>0){
+									  $(this).remove();  
+								  }
+							  });
+						  }else{
+							  def_op.children("option").each(function(i){
+								  $(this).remove();  
+							  });
+							  $("<option value=''>全部</option>").appendTo(def_op);
+						  }
+					  }
+					  var choseArea = $("#judgeChoiceArea").val();
+					  var judgeChoiceAreaType = $("#judgeChoiceAreaType").val();
+					  var areaoptions;
+					  for(var i=0,m=datas.length;i<m;i++){
+						  areaoptions=$("<option value='"+datas[i].areaId+"'>"+datas[i].name+" </option>").appendTo(def_op);
+						  if(null!=choseArea&& ""!=choseArea && datas[i].areaId==choseArea&&judgeChoiceAreaType=="1"&&clickReset=="1"){
+							
+							 $(areaoptions).attr("selected",true);
+						  }
+					  }
+					  
+				  }catch(e){}
+				  
+			  });
+	}
+}
+
+function areaControl(){
+	
+			var power;
+				if($(".powerHandle").length>0){
+					power= $(".powerHandle option:selected").val();
+				}
+			var accountAreaval = $("#acctionAreaidOrg").val()||$("#accountArea").val();
+			var accountAreaName = $("#accountAreaName").val();
+			var accountRole = $("#acctionRoleOrg").val()||$("#accountRole").val();
+			var SupervisoryOrg = $(".SupervisoryOrg");
+			if(SupervisoryOrg.length==0){
+				SupervisoryOrg = $(".areaByJdGet");
+			}
+			
+			if(accountRole =="1"&&accountAreaval!="20130809090659223kpu161g"){
+				if(SupervisoryOrg.length==1&&SupervisoryOrg.children("option").length==0){
+					$("<option selected='true' value='"+accountAreaval+"'>"+accountAreaName+"</option>").appendTo(SupervisoryOrg);	
+				}				
+				$("<option selected='true' value='"+accountAreaval+"'>"+accountAreaName+"</option>").appendTo($(".SupervisoryChoiceArea"));
+			}
+			if($(".powerHandle").length==0){
+				return false;
+			}
+			//var text =  $("#queryTowerCraneCheckRegionalID option:selected").text();
+			var areaChoice = $(".choiceArea option");
+			var preOption = $(".choiceArea option:selected").val();
+			var backupsSelect = $("#backupsSelect");
+			var backupsSelectOption = $("#backupsSelect option");
+			
+				if(backupsSelectOption.length==1&&$(backupsSelectOption[0]).val()==""){
+					var backckop =backupsSelectOption[0].innerText||backupsSelectOption[0].label;
+					if(backckop=="全部属地"){//全部属地
+					   $(backupsSelectOption[0]).remove();
+					}
+					areaChoice.each(function(){
+					var seeWords = $(this)[0].innerText||$(this)[0].label;
+						$("<option value='"+$(this).val() +"'>"+seeWords+"</option>").appendTo(backupsSelect);
+					});
+				}
+				areaChoice.each(function(){
+					$(this).remove();
+				});
+				if(power=="all"||power=="201402241454ditieban"||power=="0"){
+					$("#backupsSelect option").each(function(){
+						var seeWords = $(this)[0].innerText||$(this)[0].label;
+						var curopt = $("<option value='"+$(this).val() +"'>"+seeWords+"</option>").appendTo($(".choiceArea"));
+						if($(this).val()==preOption){
+							curopt.attr("selected",true);
+						}
+					});
+				}else{
+					$("#backupsSelect option").each(function(){
+						if(power == $(this).val()){
+						var seeWords = $(this)[0].innerText||$(this)[0].label;
+							var curopt = $("<option selected='true' value='"+$(this).val() +"'>"+seeWords+"</option>").appendTo($(".choiceArea"));
+							
+						}
+					});
+				}
+				
+
+		}
+
+	
+

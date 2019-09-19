@@ -1,0 +1,10 @@
+function removeSpace(){
+	var input=$("input[type='text']");
+	
+	for (var i = 0; i < input.length; i++) {
+		var value=input[i].value;
+		var info= $.trim(value);
+		input[i].value=info;
+	}
+	return true;
+}
