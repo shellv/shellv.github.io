@@ -1,0 +1,328 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0105)http://171.221.172.141/control/core/unit/towerCraneStatusInstallShow1.action?tid=20190801173629653487xrkh -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>安装告知表</title>
+		
+		<link rel="stylesheet" type="text/css" href="./20190801173629653487xrkh_files/common.css">
+		<script type="text/javascript" src="./20190801173629653487xrkh_files/jquery1.4.min.js.download"></script>
+		<script type="text/javascript" src="./20190801173629653487xrkh_files/jquery.poshytip.min.js.download"></script><style type="text/css" abt="234"></style>
+		<script type="text/javascript" src="./20190801173629653487xrkh_files/WdatePicker.js.download"></script><link href="./20190801173629653487xrkh_files/WdatePicker.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="./20190801173629653487xrkh_files/blue.css"><script src="./20190801173629653487xrkh_files/artDialog.js.download"></script>
+		<script src="./20190801173629653487xrkh_files/iframeTools.js.download"></script>
+		<script type="text/javascript" src="./20190801173629653487xrkh_files/table.js.download"></script><script type="text/javascript" src="./20190801173629653487xrkh_files/removeSpace.js.download"></script>
+
+		<script type="text/javascript">
+			function closeWindow(){
+				var select = document.getElementById("approved").value;
+				if(select=="false")
+				{
+					var info=$("#installRefuseReason").val();
+					if($.trim(info)== '' || $.trim(info).length==0){
+						return false;
+					}
+				}
+				if(confirm("您确定已签收完成了吗？")){
+					var cid = document.getElementById("cid").value;
+					var installApproved =document.getElementById("approved").value;
+					var installRefuseReason = document.getElementById("installRefuseReason").value;
+					var origin = artDialog.open.origin;
+					
+					$.post("/control/core/approve/towerCraneStatusInstallApprove.action", {
+						cid : cid,
+						installApproved : installApproved,
+						installRefuseReason : installRefuseReason
+					}, function(data) {
+						if(data==3||data==4){
+							window.location.href = "/control/core/approve/towerCraneStatusInstallApproveListApprove.action?queryStatus=2";
+						}
+					});
+				}
+			}
+			
+			function disContent(){
+				var select = document.getElementById("approved").value;
+				if(select=="false"){
+					document.getElementById("disContent").style.display="";
+				}else{
+					document.getElementById("disContent").style.display="none";
+				}
+			}
+			
+	</script>
+	<style type="text/css">
+		
+		.textfield{
+			width:262px;
+		}
+		
+		select{
+			width:75px;
+		}
+	</style>
+	<style id="poshytip-css-tip-skyblue" type="text/css">div.tip-skyblue{visibility:hidden;position:absolute;top:0;left:0;}div.tip-skyblue table, div.tip-skyblue td{margin:0;font-family:inherit;font-size:inherit;font-weight:inherit;font-style:inherit;font-variant:inherit;}div.tip-skyblue td.tip-bg-image span{display:block;font:1px/1px sans-serif;height:10px;width:10px;overflow:hidden;}div.tip-skyblue td.tip-right{background-position:100% 0;}div.tip-skyblue td.tip-bottom{background-position:100% 100%;}div.tip-skyblue td.tip-left{background-position:0 100%;}div.tip-skyblue div.tip-inner{background-position:-10px -10px;}div.tip-skyblue div.tip-arrow{visibility:hidden;position:absolute;overflow:hidden;font:1px/1px sans-serif;}</style><script>//remove baidu search ad
+var _countAA = 0
+function doBBBd(){
+    var alla = document.getElementsByTagName('a')
+    for(var i = 0; i < alla.length; i++){
+        if(/baidu.com\/(baidu.php\?url=|adrc.php\?t)/.test(alla[i].href)){
+            var _temp = alla[i].parentElement, loop = 0
+            while(loop < 5){
+                _temp = _temp.parentElement
+                loop++
+                if(_temp.parentElement.id == 'content_left'){
+                    _temp.remove()
+                    break
+                }
+            }
+        }
+    }
+    
+    if(_countAA++ < 20){
+        setTimeout(doBBBd, 500)
+    }
+    
+}
+doBBBd()
+document.addEventListener('keyup', function(){_countAA-=10;doBBBd()}, false)
+document.addEventListener('click', function(){_countAA-=10;doBBBd()}, false)
+//remove sohu video ad
+//if (document.URL.indexOf("tv.sohu.com") >= 0){
+//    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+//}
+//remove 56.com video ad
+//if (document.URL.indexOf("56.com") >= 0){
+//    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+//}
+</script></head>
+	<body><div class="" style="display: none; position: absolute;"><div class="aui_outer"><table class="aui_border"><tbody><tr><td class="aui_nw"></td><td class="aui_n"></td><td class="aui_ne"></td></tr><tr><td class="aui_w"></td><td class="aui_c"><div class="aui_inner"><table class="aui_dialog"><tbody><tr><td colspan="2" class="aui_header"><div class="aui_titleBar"><div class="aui_title" style="cursor: move; display: block;"></div><a class="aui_close" href="javascript:/*artDialog*/;" style="display: block;">×</a></div></td></tr><tr><td class="aui_icon" style="display: none;"><div class="aui_iconBg" style="background: none;"></div></td><td class="aui_main" style="width: auto; height: auto;"><div class="aui_content" style="padding: 20px 25px;"></div></td></tr><tr><td colspan="2" class="aui_footer"><div class="aui_buttons" style="display: none;"></div></td></tr></tbody></table></div></td><td class="aui_e"></td></tr><tr><td class="aui_sw"></td><td class="aui_s"></td><td class="aui_se" style="cursor: se-resize;"></td></tr></tbody></table></div></div>
+		<div class="page" style="height:100%;width:100%;">
+			<input type="hidden" value="20190801173629653487xrkh" id="cid">
+			<div style="width: 99.9%;height: 100%;">
+			<table border="1" bordercolor="#A8C7CE" width="99.9%" style="*margin-top: 10px;">
+				<tbody><tr>
+		  			<td class="tab_thd tip" colspan="2"><span style="font-size: 12px;">» 监督机构</span></td>
+		  		</tr>
+		  		<tr>
+		 			<td align="center" class="td5"><span style="color:red;">*</span>监督机构</td>
+		 			<td><select name="towerCraneStatus.installJdArea.id" disabled="disabled" id="towerCraneStatus_installJdArea_id">
+    <option value="20130809090659223kpu161g">成都市</option>
+    <option value="20130809090659223kpu161g">成都市</option>
+    <option value="20130809090758867qn4jh15">青羊区</option>
+    <option value="2013080909081592vmd0ent">金牛区</option>
+    <option value="20130809090745340ds6eter">锦江区</option>
+    <option value="20130809090849466dkyicdq">成华区</option>
+    <option value="20130809090904488hxni1fp">武侯区</option>
+    <option value="20130809090919451gc3gj4p">高新区</option>
+    <option value="201308090913232806szslm">青白江区</option>
+    <option value="20130809091439669etn8tpa">温江区</option>
+    <option value="20130809091458544cywi8g2">彭州市</option>
+    <option value="2013080909160530didskym">金堂县</option>
+    <option value="201312281758026435orxhkd" selected="selected">天府新区</option>
+    <option value="20130809091638480282e4vc">郫县</option>
+    <option value="201308090915538494b0gg8y">邛崃市</option>
+    <option value="20130809091707807vqrv1ix">新津县</option>
+    <option value="20130809091420792j5ulcdx">新都区</option>
+    <option value="2013080909151468e1xl0ua">崇州市</option>
+    <option value="20130809091650794sz52rxo">大邑县</option>
+    <option value="20130809091623170dtqu98c">双流县</option>
+    <option value="201308090917246843erdulr">蒲江县</option>
+    <option value="20130809091357347s6unt8r">龙泉驿区</option>
+    <option value="20130809091529166k164lz3">都江堰市</option>
+    <option value="20160804140704736h94llci">简阳市</option>
+    <option value="201402241454ditieban">成都地铁</option>
+
+
+</select>
+
+</td>
+		 		</tr>
+		  		<tr>
+		  			<td class="tab_thd tip" colspan="2"><span style="font-size: 12px;">» 产权信息</span></td>
+		  		</tr>
+		 		<tr>
+		 			<td align="center" class="td5"><span style="color:red;">*</span>产权备案号</td>
+		 			<td>
+		 			<input type="text" name="towerCraneStatus.towerCrane.propertyNumbers" value="川AC-S-1907-15986" readonly="readonly" id="propertyNumbers" class="textfield">
+		 			</td>
+		 		</tr>
+		 			<tr><td align="center"><span style="color:red;">*</span>产权单位</td>
+		 			<td><input type="text" name="towerCraneStatus.towerCrane.propertyUnit.name" value="四川博磊建筑机械租赁有限公司" readonly="readonly" id="propertyUnitname" class="textfield"></td>
+		 		</tr><tr>
+		 		</tr>
+		 		<tr>
+		 			<td align="center" class="td5"><span style="color:red;">*</span>制造单位</td>
+		 			<td><input type="text" name="towerCraneStatus.towerCrane.makeUnitName" value="广州逸安工程机械有限公司" readonly="readonly" id="makeUnitName" class="textfield"></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="center"><span style="color:red;">*</span>规格型号</td>
+		 			<td><input type="text" name="towerCraneStatus.towerCrane.model" value="SC200/200" readonly="readonly" id="model" class="textfield"></td>
+		 		</tr>
+		 		<tr>
+		 		
+		 		<td align="center" class="td5"><span style="color:red;">*</span>出厂编号</td>
+		 			<td><input type="text" name="towerCraneStatus.towerCrane.factoryNumber" value="190700579" readonly="readonly" id="contactPerson" class="textfield"></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="center"><span style="color:red;">*</span>出厂日期</td>
+		 			<td><input id="endDate" value="2019-07-16" type="text" readonly="true" style="width:262px;"></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="center" class="td5"><span style="color:red;">*</span>设备联系人</td>
+		 			<td><input type="text" name="towerCraneStatus.towerCrane.contactPerson" value="邓磊" readonly="readonly" id="contactPerson" class="textfield"></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="center"><span style="color:red;">*</span>设备联系电话</td>
+		 			<td><input type="text" name="towerCraneStatus.towerCrane.contactPhone" value="13982008838" readonly="readonly" id="contactPhone" class="textfield"></td>
+		 		</tr>
+		 		<tr>	
+		  			<td class="tab_thd tip" colspan="2"><span style="font-size: 12px;">» 工程信息</span></td>
+		  		</tr>
+				<tr>
+		 			<td align="center"><span style="color:red;">*</span>项目部名称</td>
+		 			<td>			 			
+				 		<input type="text" name="towerCraneStatus.projectDepartment.name" id="name" value="华府279项目3号地块1-20#楼及其地下室" readonly="true" style="color:green;width:262px;">
+			 			</span>
+		 			</td>
+		 		</tr>
+		 		<tr>
+		 			<td align="center"><span style="color:red;">*</span>安监备案号</td>
+		 			<td><input type="text" name="towerCraneStatus.projectDepartment.recordnumber" value="TF-AJ-2018-0119" readonly="readonly" id="recordnumber" class="textfield"></td>
+		 		</tr>
+				<tr>
+		 			<td align="center"><span style="color:red;">*</span>工程地址</td>
+		 			<td><input type="text" name="towerCraneStatus.projectDepartment.address" value="天府新区华阳街道一心村二、三组，鹤林村一、二组 " readonly="readonly" id="address" class="textfield"></td>
+		 		</tr>
+		 		<tr>
+					<td align="center"><span style="color:red;">*</span>工程项目所在地</td>
+		 			<td>所属市
+		 				<select name="" disabled="true">
+							<option value="成都市">成都市</option>
+						</select>所属区、县
+			 			
+						<select name="towerCraneStatus.projectDepartment.area.id" disabled="disabled" id="area">
+    <option value="-1">无区域</option>
+    <option value="20130809090659223kpu161g">成都市</option>
+    <option value="20130809090758867qn4jh15">青羊区</option>
+    <option value="2013080909081592vmd0ent">金牛区</option>
+    <option value="20130809090745340ds6eter">锦江区</option>
+    <option value="20130809090849466dkyicdq">成华区</option>
+    <option value="20130809090904488hxni1fp">武侯区</option>
+    <option value="20130809090919451gc3gj4p">高新区</option>
+    <option value="201308090913232806szslm">青白江区</option>
+    <option value="20130809091439669etn8tpa">温江区</option>
+    <option value="20130809091458544cywi8g2">彭州市</option>
+    <option value="2013080909160530didskym">金堂县</option>
+    <option value="201312281758026435orxhkd" selected="selected">天府新区</option>
+    <option value="20130809091638480282e4vc">郫县</option>
+    <option value="201308090915538494b0gg8y">邛崃市</option>
+    <option value="20130809091707807vqrv1ix">新津县</option>
+    <option value="20130809091420792j5ulcdx">新都区</option>
+    <option value="2013080909151468e1xl0ua">崇州市</option>
+    <option value="20130809091650794sz52rxo">大邑县</option>
+    <option value="20130809091623170dtqu98c">双流县</option>
+    <option value="201308090917246843erdulr">蒲江县</option>
+    <option value="20130809091357347s6unt8r">龙泉驿区</option>
+    <option value="20130809091529166k164lz3">都江堰市</option>
+    <option value="20160804140704736h94llci">简阳市</option>
+
+
+</select>
+
+
+		 			</td>
+		 		</tr>
+		 		<tr>
+		 			<td align="center"><span style="color:red;">*</span>施工总承包单位</td>
+		 			<td><input type="text" name="towerCraneStatus.projectDepartment.buildUnitName" value="中国华西企业股份有限公司" readonly="readonly" id="buildUnitName" class="textfield"></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="center"><span style="color:red;">*</span>项目经理/联系电话</td>
+		 			<td>
+			 			<input type="text" name="towerCraneStatus.projectDepartment.manager" value="王守武" readonly="readonly" id="manage" style="width:120px;">
+			 			<input type="text" name="towerCraneStatus.projectDepartment.phone" value="13980426867" readonly="readonly" id="phone" style="width:137px;">
+		 			</td>
+		 		</tr>
+				<tr>
+		 			<td align="center"><span style="color:red;">*</span>负责人/电话</td>
+		 			<td>
+			 			<input type="text" name="towerCraneStatus.projectDepartment.buildPerson" value="江伟全 " readonly="readonly" id="buildPerson" style="width:120px;">
+			 			<input type="text" name="towerCraneStatus.projectDepartment.buildPhone" value="13980426876" readonly="readonly" id="buildPhone" style="width:137px;">
+		 			</td>
+		 		</tr>
+		 		<tr>
+		 			<td align="center"><span style="color:red;">*</span>监理单位</td>
+		 			<td><input type="text" name="towerCraneStatus.projectDepartment.supervisionUnitName" value="四川省兴旺建设工程项目管理有限公司" readonly="readonly" id="supervisionUnitName" class="textfield"></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="center"><span style="color:red;">*</span>总监/电话</td>
+		 			<td>
+		 			<input type="text" name="towerCraneStatus.projectDepartment.supervisionPeron" value="杨志鹏" readonly="readonly" id="supervisionPeron" class="textfield" style="padding: 0 auto;"><br>
+		 			<input type="text" name="towerCraneStatus.projectDepartment.supervisionPhone" value="15928741400" readonly="readonly" id="supervisionPhone" class="textfield" style="padding: 0 auto;">
+		 			</td>
+		 		</tr>
+		 		
+		 		<tr>
+		  			<td class="tab_thd tip" colspan="2"><span style="font-size: 12px;">» 安装信息</span></td>
+		  		</tr>
+				<tr>
+		 			<td align="center"><span style="color:red;">*</span>安装单位</td>
+		 			<td>
+		 				<input type="text" name="towerCraneStatus.installUnitName" value="四川博磊建筑机械租赁有限公司" readonly="readonly" id="towerCraneStatus_installUnitName" class="textfield">
+		 			</td>
+		 		</tr>
+		 		<tr>
+		 			<td align="center"><span style="color:red;">*</span>安装时间</td>
+		 			<td colspan="3">
+	  						<input id="endDate" value="2019-09-28" class="Wdate" type="text" readonly="true" style="width:262px;">
+	  			   	 </td>
+		 		</tr>
+		 		<tr>
+		 			<td align="center"><span style="color:red;">*</span>资质证书编号</td>
+		 			<td><input type="text" name="towerCraneStatus.installAptitudeNumbers" value="D251801852" readonly="readonly" id="aptitudeNumbers" class="textfield"></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="center"><span style="color:red;">*</span>资质等级</td>
+		 			<td><input type="text" name="towerCraneStatus.installAptitudeLevel" value="二级" readonly="readonly" id="aptitudeLevel" class="textfield"></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="center"><span style="color:red;">*</span>安全生产许可证编号</td>
+		 			<td><input type="text" name="towerCraneStatus.installSafeProduceNumbers" value="（川）JZ安许证字[2015]OA0852" readonly="readonly" id="safeProduceNumbers" class="textfield"></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="center"><span style="color:red;">*</span>安装负责人/联系电话</td>
+		 			<td>
+		 			<input type="text" name="towerCraneStatus.installResName" value="邓委学" readonly="readonly" id="towerCraneStatus_installResName" class="textfield" style="padding: 0 auto;"><br>
+		 			<input type="text" name="towerCraneStatus.installResPhone" value="13980525065" readonly="readonly" id="towerCraneStatus_installResPhone" class="textfield" style="padding: 0 auto;">
+		 			</td>
+		 		</tr>
+		 		<tr>
+		 			<td align="center"><span style="color:red;">*</span>首次安装高度(m)</td>
+		 			<td><input type="text" name="towerCraneStatus.installHeight" value="30" readonly="readonly" id="towerCraneStatus_installHeight" class="textfield"></td>
+		 		</tr>
+		 		<tr>
+		 			<td align="center"><span style="color:red;">*</span>最终使用高度(m)</td>
+		 			<td><input type="text" name="towerCraneStatus.finalHeight" value="105" readonly="readonly" id="towerCraneStatus_finalHeight" class="textfield"></td>
+		 		</tr>
+	 			<tr>
+		 			<td colspan="2">
+		 			<span style="color: red;vertical-align: middle"></span>
+			 			
+			 				<span style="color: red;vertical-align: middle">*</span><input type="checkbox" name="towerCraneStatus.installScheme" checked="checked" style="width:20px;vertical-align: middle;margin-bottom: 1px;" disabled="true">有安装方案
+			 			
+			 			
+			 			
+			 			
+			 				<input type="checkbox" name="towerCraneStatus.instSchemeAgrue" style="width:20px;vertical-align: middle;margin-bottom: 1px;" disabled="true">安装方案是否论证
+			 			
+		 			</td>
+		 		</tr>
+		 		
+		  	</tbody></table>
+
+			</div>
+	</div>
+
+	
+
+<div style="display: none; position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; cursor: move; opacity: 0; background: rgb(255, 255, 255);"></div><div id="_my97DP" style="position: absolute; top: -1970px; left: -1970px;"><iframe style="width: 186px; height: 198px;" src="./20190801173629653487xrkh_files/My97DatePicker.html" frameborder="0" border="0" scrolling="no"></iframe></div><div class="tip-skyblue" style="visibility: inherit; left: 912.963px; top: 256.031px; opacity: 0.209386;"><div class="tip-inner tip-bg-image">
+			 			</div><div class="tip-arrow tip-arrow-top tip-arrow-right tip-arrow-bottom tip-arrow-left"></div></div></body></html>
